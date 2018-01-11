@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+    <!-- 磁盘缓存位置 -->
+    <diskStore path="java.io.tmpdir/ehcache"/>
+
+    <!-- 默认缓存 -->
+    <defaultCache
+            maxEntriesLocalHeap="65535"
+            eternal="false"
+            timeToIdleSeconds="60"
+            timeToLiveSeconds="60"
+            maxEntriesLocalDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+
+    <cache name="ByNm"
+           maxElementsInMemory="65536"
+           eternal="false"
+           timeToIdleSeconds="5"
+           timeToLiveSeconds="5"
+           maxEntriesLocalDisk="10000000"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU"/>
+
+
+    <cache name="RightByItemId"
+           maxElementsInMemory="65536"
+           eternal="false"
+           timeToIdleSeconds="60"
+           timeToLiveSeconds="60"
+           maxEntriesLocalDisk="10000000"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="myCache"
+           memoryStoreEvictionPolicy="FIFO"
+           maxEntriesLocalHeap="10"
+           eternal="false"
+           timeToIdleSeconds="0"
+           timeToLiveSeconds="5"
+           overflowToDisk="false"
+           diskPersistent="false">
+        <cacheWriter writeMode="write-behind"
+                     notifyListenersOnException="true"
+                     maxWriteDelay="5"
+                     rateLimitPerSecond="5000"
+                     writeCoalescing="true"
+                     writeBatching="true"
+                     writeBatchSize="500"
+                     retryAttempts="2"
+                     retryAttemptDelaySeconds="2">
+            <cacheWriterFactory class="com.gigaiot.nlostserver.WriteBehindFactory"/>
+        </cacheWriter>
+    </cache>
+
+</ehcache>
